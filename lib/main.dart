@@ -15,7 +15,9 @@ import 'firebase_options.dart';
 //8d139c4b-644d-4f06-b7b8-3a6c3d2c6166
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MaterialApp(
       home: Splash(),
@@ -33,6 +35,8 @@ void main() async {
 }
 
 class Splash extends StatefulWidget {
+  const Splash({super.key});
+
   @override
   _SplashState createState() => _SplashState();
 }

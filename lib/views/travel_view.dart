@@ -22,18 +22,18 @@ class _TravelViewState extends State<TravelView> {
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
           onTap: (index) => setState(() => currentIndex = index),
-          items: [
-            const BottomNavigationBarItem(
+          items: const [
+            BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
               backgroundColor: Colors.blue,
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.location_on),
               label: 'Location',
               backgroundColor: Colors.blue,
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle),
               label: 'User',
               backgroundColor: Colors.blue,

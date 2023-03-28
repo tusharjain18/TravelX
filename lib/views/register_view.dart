@@ -183,7 +183,7 @@ class _RegisterViewState extends State<RegisterView> {
                             );
                           },
                           child: const Text(
-                            'Already registered? Login here!',
+                            'Already Sign Up? Sign in here!',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 decoration: TextDecoration.underline,

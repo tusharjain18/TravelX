@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserView extends StatefulWidget {
@@ -36,7 +35,7 @@ class _UserViewState extends State<UserView> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.blue,
-        title: Text(
+        title: const Text(
           'User Info',
           style: TextStyle(
             color: Colors.white,
@@ -46,7 +45,7 @@ class _UserViewState extends State<UserView> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               // Navigate to the edit user screen
             },
@@ -54,7 +53,7 @@ class _UserViewState extends State<UserView> {
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -81,8 +80,8 @@ class _UserViewState extends State<UserView> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 24),
-                    Text(
+                    const SizedBox(height: 24),
+                    const Text(
                       'Name',
                       style: TextStyle(
                         fontSize: 20,
@@ -90,17 +89,17 @@ class _UserViewState extends State<UserView> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       _currentUser.displayName ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 24),
-                    Text(
+                    const SizedBox(height: 24),
+                    const Text(
                       'Email',
                       style: TextStyle(
                         fontSize: 20,
@@ -108,16 +107,16 @@ class _UserViewState extends State<UserView> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       _currentUser.email ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 24),
-                    Text(
+                    const SizedBox(height: 24),
+                    const Text(
                       'Phone Number',
                       style: TextStyle(
                         fontSize: 20,
@@ -125,10 +124,10 @@ class _UserViewState extends State<UserView> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       _currentUser.phoneNumber ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         color: Colors.black,
                       ),
