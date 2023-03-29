@@ -69,7 +69,7 @@ class _LocationViewState extends State<LocationView> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
-                'Temperature: $temperature',
+                '$temperature',
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -148,6 +148,10 @@ class _LocationViewState extends State<LocationView> {
       final responseData = json.decode(response.body);
       setState(() {
         temperature = responseData['main']['temp'].toStringAsFixed(1) + "°C";
+        final weatherCondition = responseData['weather'][0]['main'];
+        final windSpeed = responseData['wind']['speed'];
+        //  final humidity = responseData['main']['humidity'];
+        temperature += "\n$weatherCondition\n$windSpeed m/s";
       });
     } catch (error) {
       print(error);
