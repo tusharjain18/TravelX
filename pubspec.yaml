@@ -45,6 +45,8 @@ dependencies:
   cloud_firestore: ^4.4.5
   get: ^4.6.5
   amadeus: ^0.0.5
+  provider: ^6.0.5
+  flutter_theme_manager: ^0.0.6+1
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,17 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/images/destination1.jpg
+    - assets/images/destination2.jpg
+    - assets/images/destination3.jpg
+    - assets/images/destination4.jpg
+    - assets/images/destination5.jpg
+    - assets/images/destination6.jpg
+    - assets/images/destination7.jpg
+    - assets/images/destination8.jpg
+    - assets/images/destination9.jpg
+    - assets/images/destination10.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

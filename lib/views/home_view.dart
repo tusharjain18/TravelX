@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/constants/route.dart';
+import 'package:travel_app/main.dart';
 import 'package:travel_app/views/search_view.dart';
-
-import '../main.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,105 +12,225 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  ThemeMode _themeMode = ThemeMode.system;
+  void changeTheme(ThemeMode themeMode) {
+    setState(() {
+      _themeMode = themeMode;
+    });
+  }
+
+  final TextEditingController _searchController = TextEditingController();
+  final List<String> _destinations = [
+    'assets/images/destination1.jpg',
+    'assets/images/destination2.jpg',
+    'assets/images/destination3.jpg',
+    'assets/images/destination4.jpg',
+    'assets/images/destination5.jpg',
+    'assets/images/destination6.jpg',
+    'assets/images/destination7.jpg',
+    'assets/images/destination8.jpg',
+    'assets/images/destination9.jpg',
+    'assets/images/destination10.jpg',
+  ];
+  late final PageController _pageController;
+
+  bool themeDarkOrLightControl = false;
+  void darkOrLight() {
+    setState(() {
+      themeDarkOrLightControl = !themeDarkOrLightControl;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogout = await showLogOutDialog(context);
-                  if (shouldLogout) {
-                    await FirebaseAuth.instance.signOut();
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (_) => false,
-                    );
+    return MaterialApp(
+      theme: themeDarkOrLightControl ? ThemeData.dark() : ThemeData.light(),
+      home: Scaffold(
+          // backgroundColor: Colors.white,
+          appBar: AppBar(
+            actions: [
+              PopupMenuButton<MenuAction>(
+                onSelected: (value) async {
+                  switch (value) {
+                    case MenuAction.logout:
+                      final shouldLogout = await showLogOutDialog(context);
+                      if (shouldLogout) {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          loginRoute,
+                          (_) => false,
+                        );
+                      }
                   }
-              }
-            },
-            itemBuilder: (context) {
-              return [
-                const PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text('Log Out'),
-                ),
-              ];
-            },
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          child: Column(children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  radius: 27,
-                  backgroundImage: AssetImage("assets/travel.png"),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                RichText(
-                    text: const TextSpan(
-                        text: "Hi",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                        children: [
-                      TextSpan(
-                          text: ",Traveller",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ))
-                    ]))
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(100),
-              elevation: 5,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100)),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      SearchTextField(),
+                },
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem<MenuAction>(
+                      value: MenuAction.logout,
+                      child: Text('Log Out'),
+                    ),
+                  ];
+                },
+              ),
+              IconButton(
+                icon: themeDarkOrLightControl
+                    ? Icon(Icons.dark_mode)
+                    : Icon(Icons.light_mode),
+                onPressed: darkOrLight,
+              ),
+            ],
+          ),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 27,
+                        backgroundImage: AssetImage("assets/travel.png"),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      RichText(
+                          text: const TextSpan(
+                              text: "Hi",
+                              style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontSize: 18,
+                              ),
+                              children: [
+                            TextSpan(
+                                text: ",Traveller",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                    color: Colors.blueGrey))
+                          ]))
                     ],
                   ),
-                ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Material(
+                    borderRadius: BorderRadius.circular(100),
+                    elevation: 5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            SearchTextField(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      'assets/images/destination${index + 1}.jpg',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20),
+                                    ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.transparent,
+                                        Colors.black.withOpacity(0.6)
+                                      ],
+                                    ),
+                                  ),
+                                  child: AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 500),
+                                    opacity: 1.0,
+                                    curve: Curves.easeInOut,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                        ),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.black.withOpacity(0.6)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-          ]),
-        ),
-      ),
+          )),
     );
   }
 }
 
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
+  const SearchTextField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +238,7 @@ class SearchTextField extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SearchView()),
+          MaterialPageRoute(builder: (context) => const SearchView()),
         );
       },
       child: Container(
@@ -127,15 +246,17 @@ class SearchTextField extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          // color: Colors.grey[300],
         ),
         child: Row(
           children: const [
-            Icon(Icons.search),
+            Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
             SizedBox(width: 10),
             Text(
-              'Search for hotels and flights   ',
-              style: TextStyle(fontSize: 15),
+              'Search for hotels and flights            ',
+              style: TextStyle(fontSize: 15, color: Colors.black),
             ),
             CircleAvatar(
               radius: 22,

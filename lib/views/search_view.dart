@@ -1,102 +1,184 @@
 //RicXaLkvLr6iI25CrAGzUAAEF8nYu2ll
 //S61AZWj8GLGe4npu
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SearchView extends StatefulWidget {
+  const SearchView({super.key});
+
   @override
   _SearchViewState createState() => _SearchViewState();
 }
 
 class _SearchViewState extends State<SearchView> {
-  final String apiKey = 'AIzaSyCcH9B_Ra-TdjXNhcp4Im7qFmWtOvp4334';
-  final String country = 'India';
+  TextEditingController _destinationController = TextEditingController();
+  TextEditingController _checkInController = TextEditingController();
+  TextEditingController _checkOutController = TextEditingController();
+  TextEditingController _guestsController = TextEditingController();
 
-  late GoogleMapController mapController;
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  List<dynamic> _hotels = [];
+
+  void _searchHotels() async {
+    String destination = _destinationController.text;
+    String checkIn = _checkInController.text;
+    String checkOut = _checkOutController.text;
+    String guests = _guestsController.text;
+
+    String url =
+        'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=$destination&checkInDate=$checkIn&checkOutDate=$checkOut&adults=$guests';
+
+    Map<String, String> headers = {
+      'Authorization': 'Bearer RicXaLkvLr6iI25CrAGzUAAEF8nYu2ll',
+      'Content-Type': 'application/json'
+    };
+
+    http.Response response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _hotels = json.decode(response.body)['data'];
+      });
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Hotels in $country'),
+        title: Text('Hotel Search'),
       ),
-      body: GoogleMap(
-        onMapCreated: onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(20.5937, 78.9629),
-          zoom: 4.0,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextField(
+              controller: _destinationController,
+              decoration: InputDecoration(
+                labelText: 'Destination',
+              ),
+            ),
+            TextField(
+              controller: _checkInController,
+              decoration: InputDecoration(
+                labelText: 'Check-in Date',
+              ),
+            ),
+            TextField(
+              controller: _checkOutController,
+              decoration: InputDecoration(
+                labelText: 'Check-out Date',
+              ),
+            ),
+            TextField(
+              controller: _guestsController,
+              decoration: InputDecoration(
+                labelText: 'Number of Guests',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _searchHotels,
+              child: Text('Search'),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _hotels.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(_hotels[index]['hotel']['name']),
+                  subtitle:
+                      Text(_hotels[index]['hotel']['address']['lines'][0]),
+                  trailing: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              HotelBookingScreen(hotel: _hotels[index]),
+                        ),
+                      );
+                    },
+                    child: Text('Book'),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-        markers: Set<Marker>.of(markers.values),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: searchHotels,
-        child: Icon(Icons.search),
       ),
     );
   }
+}
 
-  void onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+class HotelBookingScreen extends StatefulWidget {
+  final dynamic hotel;
+
+  HotelBookingScreen({required this.hotel});
+
+  @override
+  _HotelBookingScreenState createState() => _HotelBookingScreenState();
+}
+
+class _HotelBookingScreenState extends State<HotelBookingScreen> {
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+
+  void _completeBooking() {
+    String firstName = _firstNameController.text;
+    String lastName = _lastNameController.text;
+    String email = _emailController.text;
+    String phone = _phoneController.text;
+
+// Send booking request to Amadeus API
+
+// Navigate back to search screen
+    Navigator.pop(context);
   }
 
-  Future<void> searchHotels() async {
-    const String apiUrl =
-        'https://test.api.amadeus.com/v2/shopping/hotel-offers?';
-    const String latitude = '28.7143953';
-    const String longitude = '77.0909696';
-    const String radius = '50'; // km
-    const String currency = 'INR';
-    const String checkInDate = '2023-04-01';
-    const String checkOutDate = '2023-04-03';
-    const String adults = '1';
-
-    final String url =
-        '$apiUrl&latitude=$latitude&longitude=$longitude&radius=$radius&currency=$currency&checkInDate=$checkInDate&checkOutDate=$checkOutDate&adults=$adults';
-
-    final response = await http.get(Uri.parse(url), headers: {
-      'Authorization': 'Bearer RicXaLkvLr6iI25CrAGzUAAEF8nYu2ll',
-      'Content-Type': 'application/json'
-    });
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final results = data['data'];
-
-      if (results != null) {
-        final MarkerId selectedMarker = MarkerId('selected');
-        markers.clear();
-
-        for (final result in results) {
-          final lat = result['hotel']['latitude'];
-          final lng = result['hotel']['longitude'];
-          final latLng = LatLng(lat, lng);
-
-          final markerId = MarkerId(result['hotel']['name']);
-          final marker = Marker(
-            markerId: markerId,
-            position: latLng,
-            onTap: () {
-              mapController
-                  .animateCamera(CameraUpdate.newLatLngZoom(latLng, 14.0));
-              setState(() {
-                Marker? myMarker; // use the null-aware type for the variable
-
-                // assign a value to the variable using a null-aware operator
-                myMarker ??= const Marker(
-                  markerId: MarkerId('myMarker'),
-                  position: LatLng(28.7143953, 77.0909696),
-                  infoWindow: InfoWindow(title: 'My Marker'),
-                );
-              });
-            },
-          );
-
-          markers[markerId] = marker;
-        }
-      }
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.hotel['hotel']['name']),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextField(
+              controller: _firstNameController,
+              decoration: InputDecoration(
+                labelText: 'First Name',
+              ),
+            ),
+            TextField(
+              controller: _lastNameController,
+              decoration: InputDecoration(
+                labelText: 'Last Name',
+              ),
+            ),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
+            TextField(
+              controller: _phoneController,
+              decoration: InputDecoration(
+                labelText: 'Phone',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _completeBooking,
+              child: Text('Complete Booking'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
