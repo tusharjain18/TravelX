@@ -47,6 +47,9 @@ dependencies:
   amadeus: ^0.0.5
   provider: ^6.0.5
   flutter_theme_manager: ^0.0.6+1
+  html: ^0.15.2
+  latlong2: ^0.8.1
+  flutter_map: ^3.1.0
 
 dev_dependencies:
   flutter_test:

@@ -11,6 +11,8 @@ class UserView extends StatefulWidget {
 class _UserViewState extends State<UserView> {
   late User _currentUser;
   bool themeDarkOrLightControl = false;
+  int xmoney = 0; // add this line to declare xmoney variable
+
   void darkOrLight() {
     setState(() {
       themeDarkOrLightControl = !themeDarkOrLightControl;
@@ -31,6 +33,8 @@ class _UserViewState extends State<UserView> {
       setState(() {
         _currentUser = currentUser;
         _isLoading = false;
+        // increment xmoney by 5 every time user logs in
+        xmoney += 5;
       });
     }
   }
@@ -136,6 +140,23 @@ class _UserViewState extends State<UserView> {
                       const SizedBox(height: 8),
                       Text(
                         _currentUser.phoneNumber ?? '',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        'xmoney',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '$xmoney',
                         style: const TextStyle(
                           fontSize: 24,
                           color: Colors.black,

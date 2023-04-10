@@ -1,3 +1,4 @@
+//AIzaSyCSNW7Pt4PQZ7qxeT6rrTAQoBqpcw51KBE
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/constants/route.dart';
@@ -34,12 +35,26 @@ class _HomeViewState extends State<HomeView> {
   ];
   late final PageController _pageController;
 
-  bool themeDarkOrLightControl = false;
-  void darkOrLight() {
-    setState(() {
-      themeDarkOrLightControl = !themeDarkOrLightControl;
-    });
-  }
+  int _selectedThemeIndex = 0;
+  final List<ThemeData> _themeList = [
+    ThemeData.light(),
+    ThemeData.dark(),
+    ThemeData(
+      primarySwatch: Colors.deepPurple,
+      accentColor: Colors.deepPurpleAccent,
+      scaffoldBackgroundColor: Colors.deepPurple[50],
+    ),
+    ThemeData(
+      primarySwatch: Colors.indigo,
+      accentColor: Colors.indigoAccent,
+      scaffoldBackgroundColor: Colors.indigo[50],
+    ),
+    ThemeData(
+      primarySwatch: Colors.blue,
+      accentColor: Colors.blueAccent,
+      scaffoldBackgroundColor: Colors.blue[50],
+    ),
+  ];
 
   @override
   void initState() {
@@ -56,9 +71,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: themeDarkOrLightControl ? ThemeData.dark() : ThemeData.light(),
+      theme: _themeList[_selectedThemeIndex],
+      themeMode: _themeMode,
       home: Scaffold(
-          // backgroundColor: Colors.white,
           appBar: AppBar(
             actions: [
               PopupMenuButton<MenuAction>(
@@ -85,10 +100,16 @@ class _HomeViewState extends State<HomeView> {
                 },
               ),
               IconButton(
-                icon: themeDarkOrLightControl
-                    ? Icon(Icons.dark_mode)
-                    : Icon(Icons.light_mode),
-                onPressed: darkOrLight,
+                icon: _themeList[_selectedThemeIndex].brightness ==
+                        Brightness.light
+                    ? const Icon(Icons.light_mode)
+                    : const Icon(Icons.dark_mode),
+                onPressed: () {
+                  setState(() {
+                    _selectedThemeIndex =
+                        (_selectedThemeIndex + 1) % _themeList.length;
+                  });
+                },
               ),
             ],
           ),
@@ -153,72 +174,75 @@ class _HomeViewState extends State<HomeView> {
                     height: 20,
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/destination${index + 1}.jpg',
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: List.generate(
+                          10,
+                          (index) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/destination${index + 1}.jpg',
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(20),
-                                      bottomRight: Radius.circular(20),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(20),
+                                        bottomRight: Radius.circular(20),
+                                      ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Colors.transparent,
+                                          Colors.black.withOpacity(0.6)
+                                        ],
+                                      ),
                                     ),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.transparent,
-                                        Colors.black.withOpacity(0.6)
-                                      ],
-                                    ),
-                                  ),
-                                  child: AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: 1.0,
-                                    curve: Curves.easeInOut,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(20),
-                                          bottomRight: Radius.circular(20),
-                                        ),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Colors.transparent,
-                                            Colors.black.withOpacity(0.6)
-                                          ],
+                                    child: AnimatedOpacity(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      opacity: 1.0,
+                                      curve: Curves.easeInOut,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(20),
+                                            bottomRight: Radius.circular(20),
+                                          ),
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.transparent,
+                                              Colors.black.withOpacity(0.6)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   ),
                 ],
