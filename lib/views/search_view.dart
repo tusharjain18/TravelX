@@ -1,4 +1,4 @@
-//hhhhXQDcY5eSQB4pLSsQLSukDjoeWGvY
+//AmzdTLWWCDCKLzY2OlZPYHbdQCgU
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -26,7 +26,7 @@ class _SearchViewState extends State<SearchView> {
     final response = await _httpClient.get(
       Uri.parse(
           'https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=$_cityCode&radius=5&radiusUnit=KM&hotelSource=ALL'),
-      headers: {'Authorization': 'Bearer lD8JsfuuJRerhgfO5H57VaoGZFdA'},
+      headers: {'Authorization': 'Bearer eX86QC1UtAAr0AnSjpEFq02yAmnw'},
     );
     if (response.statusCode == 200) {
       final hotelsJson = jsonDecode(response.body)['data'] as List<dynamic>;
@@ -63,8 +63,6 @@ class _SearchViewState extends State<SearchView> {
           final hotel = _hotels[index];
           return ListTile(
             title: Text(hotel.name),
-            //    subtitle: Text(hotel.address),
-            //  trailing: Text(hotel.phoneNumber),
           );
         },
       ),

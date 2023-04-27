@@ -145,23 +145,6 @@ class _UserViewState extends State<UserView> {
                           color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        'xmoney',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '$xmoney',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          color: Colors.black,
-                        ),
-                      ),
                     ],
                   ),
                 ),

@@ -277,13 +277,13 @@ class SearchTextField extends StatelessWidget {
               Icons.search,
               color: Colors.black,
             ),
-            SizedBox(width: 10),
+            //  SizedBox(width: 3),
             Text(
-              'Search for hotels and flights            ',
+              'Search for hotels and flights       ',
               style: TextStyle(fontSize: 15, color: Colors.black),
             ),
             CircleAvatar(
-              radius: 22,
+              radius: 20,
               backgroundColor: Colors.yellow,
               child: Icon(
                 Icons.sort_by_alpha_sharp,

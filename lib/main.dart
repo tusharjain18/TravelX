@@ -20,6 +20,9 @@ void main() async {
   );
   runApp(
     MaterialApp(
+      theme: them.lightTheme,
+      darkTheme: them.darkTheme,
+      themeMode: ThemeMode.system,
       home: Splash(),
       routes: {
         loginRoute: (context) => const LoginView(),
@@ -137,62 +140,6 @@ class HomePage extends StatelessWidget {
 
 enum MenuAction { logout }
 
-/*
-
-class TravelView extends StatefulWidget {
-  const TravelView({super.key});
-
-  @override
-  State<TravelView> createState() => _TravelViewState();
-}
-
-class _TravelViewState extends State<TravelView> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(
-              'assets/2.jpg',
-            ),
-            fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          actions: [
-            PopupMenuButton<MenuAction>(
-              onSelected: (value) async {
-                switch (value) {
-                  case MenuAction.logout:
-                    final shouldLogout = await showLogOutDialog(context);
-                    if (shouldLogout) {
-                      await FirebaseAuth.instance.signOut();
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        loginRoute,
-                        (_) => false,
-                      );
-                    }
-                }
-              },
-              itemBuilder: (context) {
-                return [
-                  const PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout,
-                    child: Text('Log Out'),
-                  ),
-                ];
-              },
-            )
-          ],
-        ),
-        // body: const Text('Hello Traveller'),
-      ),
-    );
-  }
-}
-
-*/
 Future<bool> showLogOutDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
@@ -217,4 +164,17 @@ Future<bool> showLogOutDialog(BuildContext context) {
       );
     },
   ).then((value) => value ?? false);
+}
+
+class them {
+  them._();
+
+  static ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    elevatedButtonTheme:
+        ElevatedButtonThemeData(style: ElevatedButton.styleFrom()),
+  );
+  static ThemeData darkTheme = ThemeData(
+    brightness: Brightness.dark,
+  );
 }

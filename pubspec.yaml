@@ -50,6 +50,10 @@ dependencies:
   html: ^0.15.2
   latlong2: ^0.8.1
   flutter_map: ^3.1.0
+  amadeus_flutter: ^0.0.1+1
+  flutter_otp_text_field: ^1.1.1
+  google_sign_in: ^6.1.0
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:

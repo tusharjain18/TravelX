@@ -38,6 +38,11 @@ class _TravelViewState extends State<TravelView> {
               label: 'User',
               backgroundColor: Colors.blue,
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.contact_phone),
+              label: 'Contact',
+              backgroundColor: Colors.blue,
+            ),
           ],
         ),
       );

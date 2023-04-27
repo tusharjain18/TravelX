@@ -60,17 +60,45 @@ class _LocationViewState extends State<LocationView> {
             zoomGesturesEnabled: _zoomGesturesEnabled,
           ),
           Positioned(
-            bottom: 10,
-            left: 10,
+            bottom: 0,
+            left: 0,
+            right: 140,
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.8),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text(
-                '$temperature',
-                style: TextStyle(fontSize: 18),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.thermostat, size: 25),
+                  SizedBox(width: 5),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Temperature:',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        '$temperature',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue[900],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -140,18 +168,26 @@ class _LocationViewState extends State<LocationView> {
   Future<void> getTemperature(double latitude, double longitude) async {
     final String apiKey = '64ea506b79ea929602bd259fc6f67224';
     final String apiUrl =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey';
-
+        'https://api.openweathermap.org/data/2.5/onecall?lat=$latitude&lon=$longitude&units=metric&exclude=minutely,hourly&appid=$apiKey';
     try {
       final response = await http.get(Uri.parse(apiUrl));
-
       final responseData = json.decode(response.body);
+      final currentWeatherData = responseData['current'];
+      final dailyWeatherData = responseData['daily'];
       setState(() {
-        temperature = responseData['main']['temp'].toStringAsFixed(1) + "°C";
-        final weatherCondition = responseData['weather'][0]['main'];
-        final windSpeed = responseData['wind']['speed'];
-        //  final humidity = responseData['main']['humidity'];
-        temperature += "\n$weatherCondition\n$windSpeed m/s";
+        temperature = currentWeatherData['temp'].toStringAsFixed(1) + "°C";
+        final weatherCondition = currentWeatherData['weather'][0]['main'];
+        final windSpeed = currentWeatherData['wind_speed'];
+        temperature += "\n$weatherCondition\n$windSpeed m/s\n";
+
+        for (int i = 1; i <= 3; i++) {
+          final dailyData = dailyWeatherData[i];
+          final dailyTemperature =
+              dailyData['temp']['day'].toStringAsFixed(1) + "°C";
+          final dailyWeatherCondition = dailyData['weather'][0]['main'];
+          temperature +=
+              "Day ${i + 1}: $dailyTemperature $dailyWeatherCondition\n";
+        }
       });
     } catch (error) {
       print(error);
