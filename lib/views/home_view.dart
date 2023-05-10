@@ -1,9 +1,13 @@
 //AIzaSyCSNW7Pt4PQZ7qxeT6rrTAQoBqpcw51KBE
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/constants/route.dart';
 import 'package:travel_app/main.dart';
-import 'package:travel_app/views/search_view.dart';
+import 'dart:async';
+
+import 'package:travel_app/views/locatiob.dart';
+import 'package:travel_app/views/images.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,6 +21,49 @@ class _HomeViewState extends State<HomeView> {
   void changeTheme(ThemeMode themeMode) {
     setState(() {
       _themeMode = themeMode;
+    });
+  }
+
+  int _selectedIndex = 0;
+  late PageController _controller;
+  double _rotateY = 0.0;
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(
+      viewportFraction: .7,
+    );
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+    _controller.addListener(() {
+      var currentPosition = _controller.page ?? 0;
+      var converted = currentPosition % 1; // to get value 0 - 1
+      if (converted >= 0.5) {
+        converted = 1 - converted;
+      }
+      setState(() {
+        _rotateY = converted;
+      });
+    });
+    bool forward = true;
+    //we will scroll every 3 seconds
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (forward) {
+        if (_selectedIndex < 9) {
+          _selectedIndex++;
+        } else {
+          forward = false;
+        }
+      }
+      if (!forward) {
+        if (_selectedIndex <= 9 && _selectedIndex > 0) {
+          _selectedIndex--;
+        } else {
+          forward = true;
+        }
+      }
+      _controller.animateToPage(_selectedIndex,
+          duration: const Duration(milliseconds: 1200), curve: Curves.easeIn);
     });
   }
 
@@ -57,12 +104,6 @@ class _HomeViewState extends State<HomeView> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -70,10 +111,11 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return MaterialApp(
-      theme: _themeList[_selectedThemeIndex],
-      themeMode: _themeMode,
-      home: Scaffold(
+        theme: _themeList[_selectedThemeIndex],
+        themeMode: _themeMode,
+        home: Scaffold(
           appBar: AppBar(
             actions: [
               PopupMenuButton<MenuAction>(
@@ -115,184 +157,69 @@ class _HomeViewState extends State<HomeView> {
           ),
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        radius: 27,
-                        backgroundImage: AssetImage("assets/travel.png"),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      RichText(
-                          text: const TextSpan(
-                              text: "Hi",
-                              style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 18,
-                              ),
-                              children: [
-                            TextSpan(
-                                text: ",Traveller",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 18,
-                                    color: Colors.blueGrey))
-                          ]))
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Material(
-                    borderRadius: BorderRadius.circular(100),
-                    elevation: 5,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            SearchTextField(),
-                          ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: kDefaultPadding,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search, size: 35.0),
                         ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: size.width * .15),
+                    child: const Text(
+                      'Find your\nnext vacation',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: List.generate(
-                          10,
-                          (index) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/destination${index + 1}.jpg',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(20),
-                                        bottomRight: Radius.circular(20),
-                                      ),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          Colors.transparent,
-                                          Colors.black.withOpacity(0.6)
-                                        ],
-                                      ),
-                                    ),
-                                    child: AnimatedOpacity(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      opacity: 1.0,
-                                      curve: Curves.easeInOut,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(20),
-                                            bottomRight: Radius.circular(20),
-                                          ),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Colors.transparent,
-                                              Colors.black.withOpacity(0.6)
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                  SizedBox(
+                    height: size.height * .6,
+                    child: PageView.builder(
+                      itemCount: locations.length,
+                      controller: _controller,
+                      onPageChanged: (value) {
+                        setState(() {
+                          _selectedIndex = value;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        Location location = locations[index];
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: kDefaultPadding),
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()
+                              ..setEntry(3, 2, 0.001)
+                              ..rotateY(_rotateY),
+                            child: ImageCard(
+                              size: size,
+                              location: location,
+                              isSelected:
+                                  index == _selectedIndex ? true : false,
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
             ),
-          )),
-    );
-  }
-}
-
-class SearchTextField extends StatelessWidget {
-  const SearchTextField({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SearchView()),
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Row(
-          children: const [
-            Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-            //  SizedBox(width: 3),
-            Text(
-              'Search for hotels and flights       ',
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.yellow,
-              child: Icon(
-                Icons.sort_by_alpha_sharp,
-                color: Colors.white,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

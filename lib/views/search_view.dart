@@ -11,81 +11,101 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
-  final _httpClient = http.Client();
-  final _hotels = <Hotel>[];
-  late String _cityCode;
-
-  @override
-  void initState() {
-    super.initState();
-    _cityCode = '';
-    _fetchHotels();
-  }
-
-  Future<void> _fetchHotels() async {
-    final response = await _httpClient.get(
-      Uri.parse(
-          'https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=$_cityCode&radius=5&radiusUnit=KM&hotelSource=ALL'),
-      headers: {'Authorization': 'Bearer eX86QC1UtAAr0AnSjpEFq02yAmnw'},
-    );
-    if (response.statusCode == 200) {
-      final hotelsJson = jsonDecode(response.body)['data'] as List<dynamic>;
-      setState(() {
-        _hotels.clear();
-        _hotels.addAll(hotelsJson.map((json) => Hotel.fromJson(json)));
-      });
-    }
-  }
+  List<dynamic> _locations = [];
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          decoration: const InputDecoration(
-            hintText: 'Enter a city name',
-            hintStyle: TextStyle(color: Colors.white54),
-            border: InputBorder.none,
-          ),
-          style: TextStyle(color: Colors.white),
-          onChanged: (value) => setState(() => _cityCode = value),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: _fetchHotels,
-          ),
-        ],
+        title: Text('Nearby Locations Demo'),
       ),
-      body: ListView.builder(
-        itemCount: _hotels.length,
-        itemBuilder: (context, index) {
-          final hotel = _hotels[index];
-          return ListTile(
-            title: Text(hotel.name),
-          );
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _locations.isNotEmpty
+              ? ListView.builder(
+                  itemCount: _locations.length,
+                  itemBuilder: (context, index) {
+                    final location = _locations[index];
+                    return ListTile(
+                      title: Text(location['name']),
+                      subtitle: Text(location['address']),
+                      trailing: Text(location['rating'].toString()),
+                    );
+                  },
+                )
+              : Center(child: Text('No nearby locations found.')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _getNearbyLocations();
         },
+        tooltip: 'Get Nearby Locations',
+        child: Icon(Icons.location_searching),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _httpClient.close();
-    super.dispose();
-  }
-}
+  Future<void> _getNearbyLocations() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-class Hotel {
-  final String name;
+    final String url =
+        'https://travel-advisor.p.rapidapi.com/locations/v2/list-nearby?currency=USD&units=km&lang=en_US';
 
-  Hotel({
-    required this.name,
-  });
+    final Map<String, dynamic> requestBody = {
+      "contentId": "cc8fc7b8-88ed-47d3-a70e-0de9991f6604",
+      "contentType": "restaurant",
+      "filters": [
+        {
+          "id": "placetype",
+          "value": ["hotel", "attraction", "restaurant"]
+        },
+        {
+          "id": "minRating",
+          "value": ["30"]
+        }
+      ],
+      "boundingBox": {
+        "northEastCorner": {
+          "latitude": 12.248278039408776,
+          "longitude": 109.1981618106365
+        },
+        "southWestCorner": {
+          "latitude": 12.243407232845051,
+          "longitude": 109.1921640560031
+        }
+      }
+    };
 
-  factory Hotel.fromJson(Map<String, dynamic> json) {
-    return Hotel(
-      name: json['name'],
-    );
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Rapidapi-Key':
+              '6a3a0baff2msh05f49bd272224dbp1d3a4cjsn2c4f673b3b04',
+          'X-Rapidapi-Host': 'travel-advisor.p.rapidapi.com',
+        },
+        body: json.encode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final nearbyLocations = data['data'] ?? [];
+
+        setState(() {
+          _locations = nearbyLocations;
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to get nearby locations.');
+      }
+    } catch (error) {
+      setState(() {
+        _locations = [];
+        _isLoading = false;
+      });
+    }
   }
 }
