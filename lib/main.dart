@@ -21,14 +21,15 @@ void main() async {
   );
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: them.lightTheme,
       darkTheme: them.darkTheme,
       themeMode: ThemeMode.system,
-      home: Splash(),
+      home: const Splash(),
       routes: {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
-        travelRoute: (context) => TravelView(),
+        travelRoute: (context) => const TravelView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
         locationRoute: (context) => const LocationView(),
         userRoute: (context) => const UserView(),
@@ -55,7 +56,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 3000),
+      duration: const Duration(milliseconds: 3000),
     );
 
     _animation = Tween<double>(
@@ -125,7 +126,7 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                return TravelView();
+                return const TravelView();
               } else {
                 return const VerifyEmailView();
               }

@@ -16,8 +16,8 @@ class LocationView extends StatefulWidget {
 
 class _LocationViewState extends State<LocationView> {
   late GoogleMapController googleMapController;
-  bool _zoomGesturesEnabled = true;
-  Completer<GoogleMapController> _controller = Completer();
+  final bool _zoomGesturesEnabled = true;
+  final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition initialCameraPosition =
       CameraPosition(target: LatLng(28.7144068, 77.0909803), zoom: 14);
@@ -56,7 +56,7 @@ class _LocationViewState extends State<LocationView> {
 
               getTemperature(latLng.latitude, latLng.longitude);
             },
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
             zoomGesturesEnabled: _zoomGesturesEnabled,
           ),
           Positioned(
@@ -64,7 +64,7 @@ class _LocationViewState extends State<LocationView> {
             left: 0,
             right: 140,
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.8),
                 borderRadius: BorderRadius.circular(10),
@@ -73,8 +73,8 @@ class _LocationViewState extends State<LocationView> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.thermostat, size: 25),
-                  SizedBox(width: 5),
+                  const Icon(Icons.thermostat, size: 25),
+                  const SizedBox(width: 5),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,9 +87,9 @@ class _LocationViewState extends State<LocationView> {
                           color: Colors.grey[800],
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
-                        '$temperature',
+                        temperature,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class _LocationViewState extends State<LocationView> {
           markers.add(Marker(
               markerId: const MarkerId('currentLocation'),
               position: LatLng(position.latitude, position.longitude),
-              infoWindow: InfoWindow(
+              infoWindow: const InfoWindow(
                 title: 'Current Location',
                 snippet: 'You are here',
               )));
@@ -166,7 +166,7 @@ class _LocationViewState extends State<LocationView> {
   }
 
   Future<void> getTemperature(double latitude, double longitude) async {
-    final String apiKey = '64ea506b79ea929602bd259fc6f67224';
+    const String apiKey = '64ea506b79ea929602bd259fc6f67224';
     final String apiUrl =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$latitude&lon=$longitude&units=metric&exclude=minutely,hourly&appid=$apiKey';
     try {

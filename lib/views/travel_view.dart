@@ -4,6 +4,8 @@ import 'package:travel_app/views/location_view.dart';
 import 'package:travel_app/views/user_view.dart';
 
 class TravelView extends StatefulWidget {
+  const TravelView({super.key});
+
   @override
   _TravelViewState createState() => _TravelViewState();
 }

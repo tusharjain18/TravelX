@@ -59,8 +59,8 @@ class _UserViewState extends State<UserView> {
           actions: [
             IconButton(
               icon: themeDarkOrLightControl
-                  ? Icon(Icons.dark_mode)
-                  : Icon(Icons.light_mode),
+                  ? const Icon(Icons.dark_mode)
+                  : const Icon(Icons.light_mode),
               onPressed: darkOrLight,
             ),
           ],

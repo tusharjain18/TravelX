@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:travel_app/constants/route.dart';
 import 'package:travel_app/utilities/show_error_dialog.dart';
 import 'package:travel_app/views/forget_password.dart';
@@ -138,24 +139,6 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          const Text(
-                            "REGISTER",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Palette.textColor1,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 3),
-                            height: 2,
-                            width: 55,
-                            color: Colors.orange,
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                   Container(
@@ -232,7 +215,7 @@ class _LoginViewState extends State<LoginView> {
                                       ),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: Colors.blue,
+                                            backgroundColor: Colors.blue,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(25),
@@ -268,13 +251,13 @@ class _LoginViewState extends State<LoginView> {
                                                     "Email",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .headline5,
+                                                        .headlineSmall,
                                                   ),
                                                   Text(
                                                     "Reset via Mail Verification",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1,
+                                                        .bodyLarge,
                                                   ),
                                                 ],
                                               ),
@@ -287,7 +270,7 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                               );
                             },
-                            child: const Text("Forget Password?"),
+                            child: const Text("Forgot Password?"),
                           ),
                         ),
                       ],
@@ -422,29 +405,34 @@ class _LoginViewState extends State<LoginView> {
                     onPressed: () {
                       _googleSignIn.signIn().then((value) {
                         String userName = value!.displayName!;
-                        String profilePicture = value!.photoUrl!;
-                        String userEmail = value!.email;
+                        String profilePicture = value.photoUrl!;
+                        String userEmail = value.email;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TravelView()),
+                          MaterialPageRoute(
+                              builder: (context) => const TravelView()),
                         );
                       });
                     },
                     style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
                       side: const BorderSide(width: 1, color: Colors.grey),
                       minimumSize: const Size(130, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      primary: Colors.white,
                       backgroundColor: Palette.googleColor,
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: 5,
                         ),
-                        const Text("Google"),
+                        Icon(LineIcons.googlePlusG),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Google"),
                       ],
                     ),
                   )
@@ -479,7 +467,7 @@ class ForgetPasswordWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.blue.shade900,
+        backgroundColor: Colors.blue.shade900,
       ),
       child: Container(
         padding: const EdgeInsets.all(20),
@@ -501,11 +489,11 @@ class ForgetPasswordWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   subTitle,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),
@@ -515,3 +503,24 @@ class ForgetPasswordWidget extends StatelessWidget {
     );
   }
 }
+
+// Register button in login page
+
+// const Column(
+//                         children: [
+//                           const Text(
+//                             "REGISTER",
+//                             style: TextStyle(
+//                               fontSize: 16,
+//                               fontWeight: FontWeight.bold,
+//                               color: Palette.textColor1,
+//                             ),
+//                           ),
+//                           Container(
+//                             margin: const EdgeInsets.only(top: 3),
+//                             height: 2,
+//                             width: 55,
+//                             color: Colors.orange,
+//                           ),
+//                         ],
+//                       ),

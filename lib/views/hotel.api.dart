@@ -13,12 +13,12 @@ class RecipeApi {
     });
 
     Map data = jsonDecode(response.body);
-    List _temp = [];
+    List temp = [];
 
     for (var i in data['data']) {
-      _temp.add(i);
+      temp.add(i);
     }
 
-    return Hotel.recipesFromSnapshot(_temp);
+    return Hotel.recipesFromSnapshot(temp);
   }
 }
