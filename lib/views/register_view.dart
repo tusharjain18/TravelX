@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+//import 'package:flutter_icons/flutter_icons.dart';
 import 'package:travel_app/constants/route.dart';
 import 'package:travel_app/views/login_view.dart';
 import 'package:travel_app/views/travel_view.dart';
@@ -442,7 +442,6 @@ class _RegisterViewState extends State<RegisterView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(MaterialCommunityIcons.google_plus),
                           const SizedBox(width: 5),
                           const Text("Google"),
                         ],

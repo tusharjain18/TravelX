@@ -7,6 +7,7 @@ import 'package:travel_app/views/home_view.dart';
 import 'package:travel_app/views/location_view.dart';
 import 'package:travel_app/views/login_view.dart';
 import 'package:travel_app/views/register_view.dart';
+import 'package:travel_app/views/search_view.dart';
 import 'package:travel_app/views/travel_view.dart';
 import 'package:travel_app/views/user_view.dart';
 import 'package:travel_app/views/verify_email_view.dart';
@@ -32,6 +33,7 @@ void main() async {
         locationRoute: (context) => const LocationView(),
         userRoute: (context) => const UserView(),
         homeRoute: (context) => const HomeView(),
+        searchRoute: (context) => const SearchView(),
       },
     ),
   );

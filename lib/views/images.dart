@@ -9,16 +9,20 @@ class ImageCard extends StatelessWidget {
     required this.size,
     required this.location,
     required this.isSelected,
+    required this.onTap,
   });
 
   final Size size;
   final Location location;
   final bool isSelected;
+  final Function() onTap;
+
   final GlobalKey _pictureKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return GestureDetector(
+      onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
@@ -46,7 +50,7 @@ class ImageCard extends StatelessWidget {
                 backgroundImageKey: _pictureKey,
               ),
               children: [
-                Image.asset(
+                Image.network(
                   location.image,
                   fit: BoxFit.cover,
                   key: _pictureKey,

@@ -180,7 +180,7 @@ class _LocationViewState extends State<LocationView> {
         final windSpeed = currentWeatherData['wind_speed'];
         temperature += "\n$weatherCondition\n$windSpeed m/s\n";
 
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 2; i++) {
           final dailyData = dailyWeatherData[i];
           final dailyTemperature =
               dailyData['temp']['day'].toStringAsFixed(1) + "°C";
