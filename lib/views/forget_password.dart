@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/views/mail.dart';
-import 'package:travel_app/views/otp_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ForgetPassswordMail extends StatelessWidget {
@@ -38,7 +37,7 @@ class ForgetPassswordMail extends StatelessWidget {
                         prefixIcon: Icon(Icons.mail_outline_rounded),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SizedBox(

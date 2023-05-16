@@ -49,16 +49,4 @@ List<Location> locations = [
     image:
         'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2018/11/12/753361-statueofunity-reuters-110118.jpg',
   ),
-  /* Location(
-    town: 'Shanghai',
-    country: 'China',
-    image:
-        'https://dynamic.tourtravelworld.com/package-images/photo-big/dir_17/486726/202664.jpg',
-  ),
-  Location(
-    town: 'Paris',
-    country: 'France',
-    image:
-        'https://dynamic.tourtravelworld.com/package-images/photo-big/dir_17/486726/202664.jpg',
-  )*/
 ];

@@ -18,7 +18,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "MAIL",
               style: TextStyle(
                   fontFamily: 'RobotMono',

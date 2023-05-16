@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/constants/route.dart';
 import 'package:travel_app/main.dart';
-import 'package:travel_app/views/forget_password.dart';
 import 'dart:async';
 
 import 'package:travel_app/views/locatiob.dart';
@@ -78,17 +77,18 @@ class _HomeViewState extends State<HomeView> {
     ThemeData.dark(),
     ThemeData(
       primarySwatch: Colors.deepPurple,
-      accentColor: Colors.deepPurpleAccent,
+
+      // accentColor: Colors.deepPurpleAccent,
       scaffoldBackgroundColor: Colors.deepPurple[50],
     ),
     ThemeData(
       primarySwatch: Colors.indigo,
-      accentColor: Colors.indigoAccent,
+      // accentColor: Colors.indigoAccent,
       scaffoldBackgroundColor: Colors.indigo[50],
     ),
     ThemeData(
       primarySwatch: Colors.blue,
-      accentColor: Colors.blueAccent,
+      // accentColor: Colors.blueAccent,
       scaffoldBackgroundColor: Colors.blue[50],
     ),
   ];
@@ -152,7 +152,7 @@ class _HomeViewState extends State<HomeView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: kDefaultPadding,
                   ),
                   child: Row(
@@ -163,7 +163,7 @@ class _HomeViewState extends State<HomeView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SearchView()),
+                                builder: (context) => const SearchView()),
                           );
                         },
                         icon: const Icon(Icons.search, size: 35.0),
@@ -210,7 +210,8 @@ class _HomeViewState extends State<HomeView> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SearchView()));
+                                        builder: (context) =>
+                                            const SearchView()));
                               }),
                         ),
                       );

@@ -1,12 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:travel_app/views/hotel.api.dart';
 import 'package:travel_app/views/hotel.dart';
 import 'package:travel_app/views/hotel_card.dart';
 
 class SearchView extends StatefulWidget {
-  const SearchView({Key? key});
+  const SearchView({super.key, Key? k});
 
   @override
   _SearchViewState createState() => _SearchViewState();
@@ -58,7 +56,7 @@ class _SearchViewState extends State<SearchView> {
               decoration: InputDecoration(
                   hintText: "Enter location",
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     onPressed: () {
                       setState(() {
                         _query = _controller.text.trim();
@@ -69,7 +67,7 @@ class _SearchViewState extends State<SearchView> {
             ),
           ),
           _isLoading
-              ? Expanded(
+              ? const Expanded(
                   child: Center(child: CircularProgressIndicator()),
                 )
               : Expanded(
