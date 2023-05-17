@@ -7,7 +7,6 @@ class HotelCard extends StatelessWidget {
 
   const HotelCard({
     super.key,
-  const HotelCard({super.key, 
     required this.title,
     required this.secondaryText,
     required this.urlTemplate,
@@ -78,7 +77,6 @@ class HotelCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        secondaryText ?? ' ',
                         secondaryText ?? ' ',
                         style: const TextStyle(
                             fontSize: 16,

@@ -422,7 +422,7 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                         backgroundColor: Palette.googleColor,
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(width: 5),

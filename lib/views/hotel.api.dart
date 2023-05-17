@@ -17,7 +17,6 @@ class RecipeApi {
 
     for (var i in data['data']) {
       temp.add(i);
-      temp.add(i);
     }
 
     return Hotel.hotelsFromSnapshot(temp);

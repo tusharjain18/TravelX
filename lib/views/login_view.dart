@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:line_icons/line_icons.dart';
@@ -218,7 +217,6 @@ class _LoginViewState extends State<LoginView> {
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.blue,
-                                            backgroundColor: Colors.blue,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(25),
@@ -255,13 +253,11 @@ class _LoginViewState extends State<LoginView> {
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headlineSmall,
-                                                        .headlineSmall,
                                                   ),
                                                   Text(
                                                     "Reset via Mail Verification",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyLarge,
                                                         .bodyLarge,
                                                   ),
                                                 ],
@@ -275,7 +271,6 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                               );
                             },
-                            child: const Text("Forgot Password?"),
                             child: const Text("Forgot Password?"),
                           ),
                         ),
@@ -413,19 +408,16 @@ class _LoginViewState extends State<LoginView> {
                         String userName = value!.displayName!;
                         String profilePicture = value.photoUrl!;
                         String userEmail = value.email;
-                        String profilePicture = value.photoUrl!;
-                        String userEmail = value.email;
+                        // String profilePicture = value.photoUrl!;
+                        //String userEmail = value.email;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const TravelView()),
                           MaterialPageRoute(
                               builder: (context) => const TravelView()),
                         );
                       });
                     },
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
                       foregroundColor: Colors.white,
                       side: const BorderSide(width: 1, color: Colors.grey),
                       minimumSize: const Size(130, 40),
@@ -506,11 +498,9 @@ class ForgetPasswordWidget extends StatelessWidget {
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleLarge,
-                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   subTitle,
-                  style: Theme.of(context).textTheme.bodyMedium,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
