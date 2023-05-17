@@ -424,7 +424,7 @@ class _LoginViewState extends State<LoginView> {
                       backgroundColor: Palette.googleColor,
                     ),
                     child: Row(
-                      children: [
+                      children: const [
                         SizedBox(
                           width: 5,
                         ),

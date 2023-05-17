@@ -4,6 +4,7 @@ class HotelCard extends StatelessWidget {
   final String title;
   final String secondaryText;
   final String urlTemplate;
+
   const HotelCard({
     super.key,
     required this.title,
