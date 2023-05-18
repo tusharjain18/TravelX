@@ -62,7 +62,7 @@ class _LocationViewState extends State<LocationView> {
           Positioned(
             bottom: 0,
             left: 0,
-            right: 140,
+            right: 150,
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -82,7 +82,7 @@ class _LocationViewState extends State<LocationView> {
                       Text(
                         'Temperature:',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey[800],
                         ),
@@ -91,7 +91,7 @@ class _LocationViewState extends State<LocationView> {
                       Text(
                         temperature,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue[900],
                         ),

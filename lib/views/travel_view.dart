@@ -16,8 +16,9 @@ class _TravelViewState extends State<TravelView> {
   final screens = [
     const HomeView(),
     const LocationView(),
-    const UserView(),
+    //const UserView(),
     const PlaceScreen(),
+    const UserView(),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -38,13 +39,13 @@ class _TravelViewState extends State<TravelView> {
               backgroundColor: Colors.blue,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle),
-              label: 'User',
+              icon: Icon(Icons.recommend_rounded),
+              label: 'Recommended',
               backgroundColor: Colors.blue,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.contact_phone),
-              label: 'Contact',
+              icon: Icon(Icons.person),
+              label: 'User',
               backgroundColor: Colors.blue,
             ),
           ],

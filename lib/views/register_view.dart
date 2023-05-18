@@ -369,7 +369,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
           ),
           Positioned(
-            bottom: 20,
+            top: MediaQuery.of(context).size.height - 100,
             left: 0,
             right: 0,
             child: Padding(
@@ -397,7 +397,9 @@ class _RegisterViewState extends State<RegisterView> {
                     "OR",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const Spacer(),
+                  const SizedBox(
+                    width: 35,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: TextButton(
@@ -422,7 +424,7 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                         backgroundColor: Palette.googleColor,
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(width: 5),

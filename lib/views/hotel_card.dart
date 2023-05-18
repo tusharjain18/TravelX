@@ -77,7 +77,7 @@ class HotelCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        secondaryText ?? ' ',
+                        secondaryText ?? 'not available ',
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,

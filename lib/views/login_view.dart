@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:travel_app/constants/route.dart';
 import 'package:travel_app/utilities/show_error_dialog.dart';
 import 'package:travel_app/views/forget_password.dart';
@@ -426,16 +425,11 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       backgroundColor: Palette.googleColor,
                     ),
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         SizedBox(
                           width: 5,
                         ),
-                        Icon(LineIcons.googlePlusG),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Google"),
                         Icon(LineIcons.googlePlusG),
                         SizedBox(
                           width: 10,

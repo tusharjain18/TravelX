@@ -15,7 +15,7 @@ class ImageCard extends StatelessWidget {
   final Size size;
   final Location location;
   final bool isSelected;
-  final Function() onTap;
+  final VoidCallback onTap;
 
   final GlobalKey _pictureKey = GlobalKey();
 

@@ -27,12 +27,6 @@ List<Location> locations = [
         'https://dmgupcwbwy0wl.cloudfront.net/system/images/000/246/174/b6e6fbfe0a70425bfa209af67b1a1ac6/x1000gt/shutterstock_1154918653.jpg?1552906145',
   ),
   Location(
-    town: 'Mumbai',
-    country: 'Maharashtra',
-    image:
-        'https://www.tripsavvy.com/thmb/sOKirs6tks8NcKlhytwechtqOm4=/4241x2386/smart/filters:no_upscale()/GettyImages-1008831236-5c65d6bf4cedfd00014aa310.jpg',
-  ),
-  Location(
     town: 'Dehradun',
     country: 'Uttarakhand',
     image:
