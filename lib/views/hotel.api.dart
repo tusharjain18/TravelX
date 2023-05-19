@@ -4,7 +4,7 @@ import 'package:travel_app/views/hotel.dart';
 
 class RecipeApi {
   static Future<List<Hotel>> getRecipe(String query) async {
-    var uri = Uri.https('travel-advisor.p.rapidapi.com',
+    var uri = Uri.https('tripadvisor16.p.rapidapi.com',
         '/api/v1/hotels/searchLocation', {"query": query});
 
     final response = await http.get(uri, headers: {
@@ -13,12 +13,12 @@ class RecipeApi {
     });
 
     Map data = jsonDecode(response.body);
-    List temp = [];
+    List _temp = [];
 
     for (var i in data['data']) {
-      temp.add(i);
+      _temp.add(i);
     }
 
-    return Hotel.hotelsFromSnapshot(temp);
+    return Hotel.hotelsFromSnapshot(_temp);
   }
 }

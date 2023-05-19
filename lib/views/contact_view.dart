@@ -10,9 +10,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Place Information',
+      title: 'State Info',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
+        hintColor: Colors.green,
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(fontSize: 16),
+          headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       home: const PlaceScreen(),
     );
@@ -454,7 +459,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (value) => searchStates(value),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Search',
                 prefixIcon: Icon(Icons.search),
               ),

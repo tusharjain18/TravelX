@@ -33,7 +33,7 @@ class HotelCard extends StatelessWidget {
         ],
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.35),
+            Colors.blue.withOpacity(0.35),
             BlendMode.multiply,
           ),
           image: NetworkImage(urlTemplate),
