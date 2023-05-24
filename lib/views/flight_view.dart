@@ -143,32 +143,39 @@ class _FlightViewState extends State<FlightView> {
                 controller: _sourceAirportController,
                 decoration: InputDecoration(labelText: 'Source Airport Code'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _destinationAirportController,
                 decoration:
                     InputDecoration(labelText: 'Destination Airport Code'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _dateController,
                 decoration: InputDecoration(labelText: 'Date (YYYY-MM-DD)'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _returnDateController,
                 decoration:
                     InputDecoration(labelText: 'Return Date (YYYY-MM-DD)'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _numAdultsController,
                 decoration: InputDecoration(labelText: 'Number of Adults'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _numSeniorsController,
                 decoration: InputDecoration(labelText: 'Number of Seniors'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _classOfServiceController,
                 decoration: InputDecoration(labelText: 'Class of Service'),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: _currencyCodeController,
                 decoration: InputDecoration(labelText: 'Currency Code'),
@@ -187,20 +194,45 @@ class _FlightViewState extends State<FlightView> {
                         leading: flight.imageUrl != null
                             ? Image.network(flight.imageUrl!)
                             : null,
-                        title: Text(flight.originStationCode +
-                            ' to ' +
-                            flight.destinationStationCode),
+                        title: Text(
+                          flight.originStationCode +
+                              ' to ' +
+                              flight.destinationStationCode,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Departure: ' + flight.departureDateTime),
-                            Text('Arrival: ' + flight.arrivalDateTime),
-                            Text('Class of Service: ' + flight.classOfService),
-                            Text('Marketing Carrier: ' +
-                                flight.marketingCarrierCode),
-                            Text('Operating Carrier: ' +
-                                flight.operatingCarrierCode),
-                            Text('Equipment ID: ' + flight.equipmentId),
+                            SizedBox(height: 5),
+                            Text(
+                              'Departure: ' + flight.departureDateTime,
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Arrival: ' + flight.arrivalDateTime,
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Class of Service: ' + flight.classOfService,
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Marketing Carrier: ' +
+                                  flight.marketingCarrierCode,
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Operating Carrier: ' +
+                                  flight.operatingCarrierCode,
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Equipment ID: ' + flight.equipmentId,
+                            ),
+                            SizedBox(height: 5),
                           ],
                         ),
                       ),
@@ -208,7 +240,13 @@ class _FlightViewState extends State<FlightView> {
                   }).toList(),
                 ),
               if (_flights.isEmpty && _sourceAirportController.text.isNotEmpty)
-                Text('No flights found.'),
+                Text(
+                  'No flights found.',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 16,
+                  ),
+                ),
             ],
           ),
         ),

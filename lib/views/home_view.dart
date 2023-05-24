@@ -1617,31 +1617,79 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        body: SafeArea(
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: kDefaultPadding,
+                  padding: EdgeInsets.only(left: size.width * .15),
+                  child: Text(
+                    'Find your',
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: size.width * .15),
+                  child: Text(
+                    'next vacation',
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Roboto', // Replace with your desired font
+                      color: Colors.blue, // Replace with your desired color
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const FlightView()),
+                              builder: (context) => const FlightView(),
+                            ),
                           );
                         },
-                        icon: const Icon(Icons.flight, size: 35.0),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.flight,
+                                size: 15.0,
+                                color: Colors.white,
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                'Flights',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      IconButton(
-                        onPressed: () {
+                    ),
+                    SizedBox(width: 20.0),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
                           // Replace this with hotel navigation logic
                           Navigator.push(
                             context,
@@ -1650,21 +1698,36 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           );
                         },
-                        icon: const Icon(Icons.hotel, size: 35.0),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.hotel,
+                                size: 15.0,
+                                color: Colors.white,
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                'Hotels',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: size.width * .15),
-                  child: const Text(
-                    'Find your\nnext vacation',
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
+                  ],
                 ),
+                SizedBox(height: 20.0),
                 SizedBox(
                   height: size.height * .6,
                   child: PageView.builder(
