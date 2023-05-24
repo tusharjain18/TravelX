@@ -1,11 +1,6 @@
 import 'dart:convert';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:travel_app/views/hotel.api.dart';
-import 'package:travel_app/views/hotel.dart';
-import 'package:travel_app/views/hotel_card.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key, Key? k});
@@ -31,8 +26,11 @@ class _SearchViewState extends State<SearchView> {
       'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com',
     };
 
-    var response = await http.get(url.replace(queryParameters: queryParameters),
-        headers: headers);
+    var response = await http.get(
+      url.replace(queryParameters: queryParameters),
+      headers: headers,
+    );
+
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       var data = jsonData['data'];
@@ -55,11 +53,13 @@ class _SearchViewState extends State<SearchView> {
         // Remove <b> tags from the title
         title = title.replaceAll('<b>', '').replaceAll('</b>', '');
 
-        locations.add(LocationData(
-          title: title,
-          secondaryText: secondaryText,
-          urlTemplate: urlTemplate,
-        ));
+        locations.add(
+          LocationData(
+            title: title,
+            secondaryText: secondaryText,
+            urlTemplate: urlTemplate,
+          ),
+        );
       }
 
       setState(() {
@@ -98,21 +98,32 @@ class _SearchViewState extends State<SearchView> {
                 child: Column(
                   children: parsedLocationData.map((location) {
                     return ListTile(
-                      title: Text(location.title),
+                      title: Text(
+                        location.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(location.secondaryText),
-                          // Display the image if available
                           if (location.urlTemplate != null)
-                            Image.network(location.urlTemplate!),
+                            SizedBox(
+                              height: 200,
+                              child: Image.network(
+                                location.urlTemplate!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                         ],
                       ),
                     );
                   }).toList(),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

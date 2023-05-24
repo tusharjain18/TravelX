@@ -7,6 +7,7 @@ import 'package:travel_app/constants/route.dart';
 import 'package:travel_app/main.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app/views/flight_view.dart';
 import 'package:travel_app/views/locatiob.dart';
 import 'package:travel_app/views/images.dart';
 import 'package:travel_app/views/search_view.dart';
@@ -1519,7 +1520,7 @@ class _HomeViewState extends State<HomeView> {
     });
     bool forward = true;
     //we will scroll every 3 seconds
-    Timer.periodic(const Duration(seconds: 3), (timer) {
+    Timer.periodic(const Duration(seconds: 5), (timer) {
       if (forward) {
         if (_selectedIndex < 9) {
           _selectedIndex++;
@@ -1634,10 +1635,22 @@ class _HomeViewState extends State<HomeView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SearchView()),
+                                builder: (context) => const FlightView()),
                           );
                         },
-                        icon: const Icon(Icons.search, size: 35.0),
+                        icon: const Icon(Icons.flight, size: 35.0),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          // Replace this with hotel navigation logic
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SearchView(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.hotel, size: 35.0),
                       ),
                     ],
                   ),
